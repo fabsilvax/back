@@ -1,0 +1,40 @@
+<mat-card class="form-container">
+    <mat-card-header>
+        <h2>Bienvenido a VecindApp!</h2>
+    </mat-card-header>
+    <mat-card-content>
+        <form [formGroup]="loginForm" (submit)="submit()">
+            <mat-error *ngIf="!loginValid">El nombre o contraseña es inválido</mat-error>
+            <br>
+            <mat-form-field>
+                <mat-label>Nombre de Usuario</mat-label>
+                <input matInput type="text" placeholder="Nombre de Usuario" name="name" required> 
+                <mat-icon matSuffix>person</mat-icon>
+
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <mat-label>Contraseña</mat-label>
+                <input matInput type="text" placeholder="Contraseña" name="password" required>
+                <mat-icon matSuffix>lock</mat-icon>
+            </mat-form-field>
+            <br>
+           <div class="button-container">
+            <button mat-raised-button color="primary">Login</button>
+            <button mat-flat-button color="secondary">Crear Cuenta</button>
+           </div>
+        </form>
+    </mat-card-content>
+</mat-card>
+
+<div class="body-container">
+    <div class="left">
+    
+    </div>
+    <div class="right">
+    
+    </div>
+
+</div>
+
+    
