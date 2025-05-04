@@ -1,2 +1,6 @@
-
-  <router-outlet/>
+@if(!loggedIn){
+  <app-login (loggedInEvent)="confirmLogIn()"></app-login>
+} @else {
+  <app-sidebar></app-sidebar>
+  
+}

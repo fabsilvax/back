@@ -1,1 +1,40 @@
-<p>sidebar works!</p>
+<mat-toolbar class="mat-elevation-z3">
+    <button mat-icon-button (click)="collapsed.set(!collapsed())">
+        <mat-icon>menu</mat-icon>
+    </button>
+</mat-toolbar>
+<mat-sidenav-container [style.border]="'1px solid black'">
+    <mat-sidenav opened mode="side" [style.border]="'1px solid red' " [style.width]="sidenavWidth()">
+        @if(!collapsed()){
+            <div class="sidenav-header">
+                <img width="100" height="100" src="/VecindApp.png" alt="Minecraft Steve">
+                <div class="header-text">
+                    <h2>Hola, Usuario</h2>
+                </div>
+            </div>
+        } @else {
+            <div [style.height]="'162px'">
+
+            </div>
+        }
+        <mat-nav-list>
+            @for(item of items; track $index){
+                <a mat-list-item
+                    [routerLink]="item.link"
+                >
+                    <mat-icon matListItemIcon>{{item.icon}}</mat-icon>
+                    <span>{{ item.label }}</span>
+                </a>
+            }
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content class="content" [style.margin-left]="sidenavWidth()">
+
+
+        
+
+
+
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>

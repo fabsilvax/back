@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {MatCardModule} from '@angular/material/card';
@@ -19,7 +19,7 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   private adminService =  inject(AdministradorService);
   private router = inject(Router);
-
+  @Output() loggedInEvent = new EventEmitter<boolean>();
   loginValid: boolean = true;
   loginView: boolean = true;
   loginForm = new FormGroup(
@@ -46,7 +46,8 @@ export class LoginComponent {
       if(response.status == 202){
         console.log(response.body)
         localStorage.setItem('administradorLoggeado', JSON.stringify(response.body));
-        this.router.navigate(['/home']);
+        this.loggedInEvent.emit(true);
+        this.router.navigate(['']);
       }
     },
     error: (error) => {
@@ -70,5 +71,6 @@ export class LoginComponent {
     this.loginView = !this.loginView
     console.log(this.loginView)
   }
+
    
 }

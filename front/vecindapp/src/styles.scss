@@ -9,5 +9,9 @@ html{
 }
 
 
-html, body { height: 100%; }
+html, body { height: 100%; margin:0; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+app-root, mat-sidenav-container, app-sidebar {
+    height: calc(100vh - 64px)
+  }
