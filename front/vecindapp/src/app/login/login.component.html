@@ -1,31 +1,94 @@
-<mat-card class="form-container">
-    <mat-card-header>
-        <h2>Bienvenido a VecindApp!</h2>
-    </mat-card-header>
-    <mat-card-content>
-        <form [formGroup]="loginForm" (submit)="submit()">
-            <mat-error *ngIf="!loginValid">El nombre o contraseña es inválido</mat-error>
-            <br>
-            <mat-form-field>
-                <mat-label>Nombre de Usuario</mat-label>
-                <input matInput type="text" placeholder="Nombre de Usuario" name="name" required> 
-                <mat-icon matSuffix>person</mat-icon>
-
-            </mat-form-field>
-            <br>
-            <mat-form-field>
-                <mat-label>Contraseña</mat-label>
-                <input matInput type="text" placeholder="Contraseña" name="password" required>
-                <mat-icon matSuffix>lock</mat-icon>
-            </mat-form-field>
-            <br>
-           <div class="button-container">
-            <button mat-raised-button color="primary">Login</button>
-            <button mat-flat-button color="secondary">Crear Cuenta</button>
-           </div>
-        </form>
-    </mat-card-content>
-</mat-card>
+@if(loginView){
+    <mat-card class="form-container">
+        <mat-card-header>
+            <div class="form-header">
+            
+    
+            <div class="header-top">
+                <h2>Bienvenido a VecindApp</h2>
+            </div>
+            
+            <div class="header-low">
+                    <p>Inicie Sesion</p>
+                    <button mat-button color="secondary" (click)="cambiarVista()">O cree una Cuenta</button>
+            
+            </div>
+            </div>
+            
+        </mat-card-header>
+        <mat-card-content>
+            <form [formGroup]="loginForm" (submit)="login()">
+                
+                <mat-error *ngIf="!loginValid">El nombre o contraseña es inválido</mat-error>
+                <br>
+                <mat-form-field>
+                    <mat-label>Nombre de Usuario</mat-label>
+                    <input matInput type="text" placeholder="Nombre de Usuario" name="name" required formControlName="name"> 
+                    <mat-icon matSuffix>person</mat-icon>
+    
+                </mat-form-field>
+                <br>
+                <mat-form-field>
+                    <mat-label>Contraseña</mat-label>
+                    <input matInput type="text" placeholder="Contraseña" name="password" required formControlName="password">
+                    <mat-icon matSuffix>lock</mat-icon>
+                </mat-form-field>
+                <br>
+               <div class="button-container">
+                
+                
+                <button mat-flat-button color="primary" type="submit" [disabled]="isButtonDisabled()">Login</button>
+               
+                 
+        
+                
+               </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+} @else {
+    <mat-card class="form-container">
+        <mat-card-header>
+            <div class="form-header">
+            
+    
+            <div class="header-top">
+                <h2>Bienvenido a VecindApp</h2>
+            </div>
+            
+            <div class="header-low">
+                    <p>Crear Cuenta</p>
+                    <button mat-button color="secondary" (click)="cambiarVista()">O inicie sesion</button>
+            
+            </div>
+            </div>
+            
+        </mat-card-header>
+        <mat-card-content>
+            <form [formGroup]="loginForm" (submit)="crearCuenta()">
+                <mat-error *ngIf="!loginValid">El nombre de usuario ya esta asociado a una cuenta</mat-error>
+                <br>
+                <mat-form-field>
+                    <mat-label>Nombre de Usuario</mat-label>
+                    <input matInput type="text" placeholder="Nombre de Usuario" name="name" required> 
+                    <mat-icon matSuffix>person</mat-icon>
+    
+                </mat-form-field>
+                <br>
+                <mat-form-field>
+                    <mat-label>Contraseña</mat-label>
+                    <input matInput type="text" placeholder="Contraseña" name="password" required>
+                    <mat-icon matSuffix>lock</mat-icon>
+                </mat-form-field>
+                <br>
+               <div class="button-container">
+                <button mat-flat-button color="primary" type="submit">Crear Cuenta</button>
+                
+               </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+}
 
 <div class="body-container">
     <div class="left">

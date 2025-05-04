@@ -19,7 +19,7 @@ public class Vivienda {
     private Date fechaRegistro;
 
     private Double montoAcumulado;
-    private Boolean montoSolvente;
+    private Boolean solvente;
 
     @ManyToOne
     @JoinColumn(name="administrador_id")
