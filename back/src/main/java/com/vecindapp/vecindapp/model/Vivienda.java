@@ -43,11 +43,13 @@ public class Vivienda {
     }
 
 
-    public Vivienda(String nombre, String direccion, Administrador administrador) {
+    public Vivienda(String nombre, String direccion, Double montoAcumulado, Administrador administrador) {
         this.fechaRegistro = LocalDate.now();
         this.nombre = nombre;
         this.direccion = direccion;
         this.administrador = administrador;
+        this.montoAcumulado = montoAcumulado;
+        this.solvente = montoAcumulado == 0;
     }
 
     public Vivienda(){

@@ -21,7 +21,7 @@ public class ViviendaService {
         if(viviendaEncontrada.isPresent()){
             return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
         }
-        Vivienda nuevaVivienda = new Vivienda(vivienda.getNombre(), vivienda.getDireccion(), administrador);
+        Vivienda nuevaVivienda = new Vivienda(vivienda.getNombre(), vivienda.getDireccion(), vivienda.getMontoAcumulado(), administrador);
         this.viviendaRepository.save(nuevaVivienda);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevaVivienda);
     }

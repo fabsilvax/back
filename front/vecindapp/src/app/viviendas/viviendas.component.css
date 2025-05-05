@@ -1,0 +1,22 @@
+.card-container{
+    width: 100%;
+    height: calc(100vh - 200px);
+    border-radius: 0%;
+    align-items: center;
+}
+
+.list-container{
+    width: 100%;
+    height: calc(100vh - 200px);
+}
+
+.form-container{
+    width: 90%;
+    align-items: center;
+    align-self: center;
+    padding: 24px;
+}
+
+mat-form-field{
+    width: 100%;
+}

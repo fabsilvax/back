@@ -1,1 +1,47 @@
-<p>viviendas works!</p>
+
+<mat-tab-group>
+    <mat-tab label="Viviendas">
+        <mat-card class="card-container">
+            <div class="list-container">
+            
+                @for(vivienda of viviendasPaginadas; track $index){
+                    A
+                    <p>{{vivienda.nombre}}</p>
+                }
+            </div>
+            <mat-paginator [length]="viviendas" [pageSize]="10" [pageSizeOptions]="[10]" (page)="onPageChange($event)">
+                
+            </mat-paginator>
+        </mat-card>
+    </mat-tab>
+    <mat-tab label="Crear">
+        <mat-card class="card-container">
+            <div class="form-container">
+                <form [formGroup]="crearViviendaForm" (submit)="crearVivienda()">
+                    <mat-form-field>
+                      <mat-label>Nombre de la Vivienda</mat-label>
+                      <input matInput type="text" placeholder="Nombre" [formControlName]="'nombre'" required>
+                      <mat-icon matSuffix>house</mat-icon>
+                    </mat-form-field>
+                    <br>
+                    <mat-form-field>
+                      <mat-label>Direccion de la Vivienda</mat-label>
+                      <input  matInput type="text" placeholder="Direccion" formControlName="direccion" required>
+                      <mat-icon matSuffix>more</mat-icon>
+                    </mat-form-field>
+                    <br>
+                    <mat-form-field>
+                      <mat-label>Deuda Existente</mat-label>
+                      <input matInput type="number" placeholder="Deuda" formControlName="montoAcumulado" required>
+                      <mat-icon matSuffix>credit_card</mat-icon>
+                    </mat-form-field>
+                    <br>
+                    <button mat-flat-button color="primary" type="submit" [disabled]="isButtonDisabled()">Crear</button>
+      
+                  </form>
+            </div>
+            AA
+        </mat-card>
+    </mat-tab>
+  </mat-tab-group>
+  
