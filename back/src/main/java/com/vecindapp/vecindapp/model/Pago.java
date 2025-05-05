@@ -1,5 +1,7 @@
 package com.vecindapp.vecindapp.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.springframework.jdbc.support.lob.TemporaryLobCreator;
 
@@ -20,9 +22,11 @@ public class Pago {
 
     @ManyToOne
     @JoinColumn(name="administrador_id")
+    @JsonIgnore
     private Administrador administrador;
 
     @ManyToOne
     @JoinColumn(name="vivienda_id")
+    @JsonIgnore
     private Vivienda vivienda;
 }

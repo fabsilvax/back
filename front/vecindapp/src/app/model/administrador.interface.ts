@@ -4,5 +4,4 @@ export interface Administrador{
     clave: string;
     diasHabiles?: number,
     recargo?: number,
-    
 }

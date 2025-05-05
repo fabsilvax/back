@@ -1,5 +1,7 @@
 package com.vecindapp.vecindapp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -17,9 +19,11 @@ public class Administrador {
     private Double montoPago;
 
     @OneToMany(mappedBy = "administrador", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Vivienda> viviendas;
 
     @OneToMany(mappedBy = "administrador", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Pago> pagos;
 
     public Administrador(){}
