@@ -3,9 +3,9 @@
     <mat-tab label="Viviendas">
         <mat-card class="card-container">
             <div class="list-container">
-            
-                @for(vivienda of viviendasPaginadas; track $index){
-                    A
+            A
+                @for(vivienda of viviendas; track $index){
+                    
                     <p>{{vivienda.nombre}}</p>
                 }
             </div>

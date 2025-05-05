@@ -23,4 +23,9 @@ public class AdministradorController {
     public ResponseEntity<Administrador> crearAdministrador(@RequestBody Administrador nuevoAdminsitrador){
         return administradorService.crearAdministrador(nuevoAdminsitrador);
     }
+
+    @GetMapping("/administrador/buscar")
+    public ResponseEntity<Administrador> encontrarPorId(@RequestParam Integer administradorId){
+        return administradorService.encontrarPorId(administradorId);
+    }
 }

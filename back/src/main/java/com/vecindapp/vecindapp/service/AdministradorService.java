@@ -33,4 +33,9 @@ public class AdministradorService {
         return administradorEncontrado.map(administrador -> ResponseEntity.status(HttpStatus.ACCEPTED).body(administrador)).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
 
     }
+
+    public ResponseEntity<Administrador> encontrarPorId(Integer adminsitradorId){
+        Optional<Administrador> administradorEncontrado = administradorRepository.findById(adminsitradorId);
+        return administradorEncontrado.map(administrador -> ResponseEntity.status(HttpStatus.ACCEPTED).body(administrador)).orElseGet(() -> ResponseEntity.status(HttpStatus.ACCEPTED).body(null));
+    }
 }

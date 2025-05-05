@@ -11,4 +11,6 @@ public interface AdministradorRepository extends JpaRepository<Administrador, In
     Optional<Administrador> findByNombreAndClave(String nombre, String clave);
 
     Optional<Administrador> findByNombre(String nombre);
+
+
 }

@@ -12,6 +12,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
+import { Administrador } from '../model/administrador.interface';
+import { ViviendaAdministradorDTO } from '../model/viviendaAdministradorDTO.interface';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-viviendas',
@@ -24,7 +27,8 @@ export class ViviendasComponent {
   viviendasPaginadas: Array<Vivienda> = []
   private viviendaService = inject(ViviendasService)
   private route = inject(ActivatedRoute)
-
+  id: number = 0;
+  private _snackBar = inject(MatSnackBar);
   crearViviendaForm = new FormGroup({
     nombre: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(15)]),
     direccion: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(15)]),
@@ -32,11 +36,18 @@ export class ViviendasComponent {
   })
 
   ngOnInit(){
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.viviendaService.obtenerViviendasDeAdministrador(id)
+   
+    this.obtenerViviendas();
+
+  }
+
+  obtenerViviendas(){
+    this.id = Number(this.route.snapshot.paramMap.get('id'));
+    this.viviendaService.obtenerViviendasDeAdministrador(this.id)
     .subscribe({
       next: (response) => {
         if(response){
+          console.log(response)
           this.viviendas = response as unknown as Array<Vivienda>
           this.viviendas.forEach(function (value) {
             console.log(value.nombre);
@@ -47,8 +58,6 @@ export class ViviendasComponent {
         console.log('Uy '+ error.status)
       }
     })
-
-
   }
 
   onPageChange(event: PageEvent){
@@ -62,6 +71,33 @@ export class ViviendasComponent {
   }
 
   crearVivienda(){
+    const viviendaNueva: Vivienda = {
+      nombre: this.crearViviendaForm.value.nombre?? '',
+      direccion: this.crearViviendaForm.value.direccion?? '',
+      montoAcumulado: this.crearViviendaForm.value.montoAcumulado?? 0
+    }
+
+    const administradorDueno: Administrador = JSON.parse(localStorage.getItem('administradorLoggeado') || '')
+
+    const DTO: ViviendaAdministradorDTO = {
+      vivienda: viviendaNueva,
+      administrador: administradorDueno
+    }
+
+    this.viviendaService.crearVivienda(DTO)
+    .subscribe({
+      next:(response) =>{
+        if(response.status == 201){
+          this._snackBar.open('Vivienda Creada!', 'Ok')
+          
+        }
+
+      },
+      error:() => {
+
+      }
+    })
+    this.obtenerViviendas()
     
   }
   isButtonDisabled(): boolean{

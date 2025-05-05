@@ -16,4 +16,8 @@ export class AdministradorService {
   loggearAdministrador(administrador: Administrador){
     return this.http.post<HttpResponse<Administrador>>("http://localhost:8080/administrador/login", administrador, {observe: 'response'});
   }
+
+  buscarAdministradorPorId(administradorId: number){
+    return this.http.get<HttpResponse<Administrador>>("http://localhost:8080/administrador/buscar",{params: {administradorId: administradorId}} )
+  }
 }
