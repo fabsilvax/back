@@ -36,6 +36,7 @@ export class LoginComponent {
   }
 
   login(){
+  let responseBody : Administrador;
   const administrador: Administrador = {
     nombre: this.loginForm.value.name ?? '',
     clave: this.loginForm.value.password ?? ''
@@ -44,10 +45,15 @@ export class LoginComponent {
   .subscribe({
     next: (response) => {
       if(response.status == 202){
-        console.log(response.body)
-        localStorage.setItem('administradorLoggeado', JSON.stringify(response.body));
-        this.loggedInEvent.emit(true);
-        this.router.navigate(['']);
+        if(response.body){
+          localStorage.setItem('administradorLoggeado', JSON.stringify(response.body));
+
+          this.loggedInEvent.emit(true);
+          this.loginEvent.emit(response.body as unknown as Administrador);
+          this.router.navigate([`dashboard/${(response.body as unknown as Administrador).id}`]);
+        }
+        
+        
       }
     },
     error: (error) => {
@@ -72,5 +78,6 @@ export class LoginComponent {
     console.log(this.loginView)
   }
 
+  @Output() loginEvent = new EventEmitter<Administrador>();
    
 }

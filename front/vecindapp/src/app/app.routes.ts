@@ -10,15 +10,15 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 export const routes: Routes = [
     
     {
-        path:'viviendas',
+        path:'viviendas/:id',
         component:ViviendasComponent
     },
     {
-        path:'pagos',
+        path:'pagos/:id',
         component:PagosComponent
     },
     {
-        path:'dashboard',
+        path:'dashboard/:id',
         component:DashboardComponent
     }
 ];

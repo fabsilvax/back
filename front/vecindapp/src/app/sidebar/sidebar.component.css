@@ -23,3 +23,8 @@ mat-toolbar {
     }
     
 }
+
+mat-sidenav{
+    border-radius: 0px;
+    box-shadow: 2px 0px 2px grey;
+}

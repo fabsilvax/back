@@ -4,12 +4,12 @@
     </button>
 </mat-toolbar>
 <mat-sidenav-container [style.border]="'1px solid black'">
-    <mat-sidenav opened mode="side" [style.border]="'1px solid red' " [style.width]="sidenavWidth()">
+    <mat-sidenav opened mode="side"  [style.width]="sidenavWidth()">
         @if(!collapsed()){
             <div class="sidenav-header">
                 <img width="100" height="100" src="/VecindApp.png" alt="Minecraft Steve">
                 <div class="header-text">
-                    <h2>Hola, Usuario</h2>
+                    <h2>Hola, {{ loggedUserObject.nombre }} </h2>
                 </div>
             </div>
         } @else {
@@ -20,7 +20,7 @@
         <mat-nav-list>
             @for(item of items; track $index){
                 <a mat-list-item
-                    [routerLink]="item.link"
+                    [routerLink]="`${item.link}/${loggedUserObject.id}`"
                 >
                     <mat-icon matListItemIcon>{{item.icon}}</mat-icon>
                     <span>{{ item.label }}</span>

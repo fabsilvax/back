@@ -1,6 +1,5 @@
 @if(!loggedIn){
-  <app-login (loggedInEvent)="confirmLogIn()"></app-login>
+  <app-login  (loginEvent)="confirmLogIn($event)"></app-login>
 } @else {
-  <app-sidebar></app-sidebar>
-  
+  <app-sidebar [loggedUserString]="loggedUser"></app-sidebar>
 }
