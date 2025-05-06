@@ -1,23 +1,63 @@
 
 <mat-tab-group>
     <mat-tab label="Viviendas">
-        <mat-card class="card-container">
-            <div class="list-container">
-            A
-                @for(vivienda of viviendas; track $index){
-                    
-                    <p>{{vivienda.nombre}}</p>
-                }
-            </div>
-            <mat-paginator [length]="viviendas" [pageSize]="10" [pageSizeOptions]="[10]" (page)="onPageChange($event)">
-                
-            </mat-paginator>
-        </mat-card>
+    <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="viviendasPaginadas">
+
+            <ng-container matColumnDef="Nombre">
+                <th mat-header-cell *matHeaderCellDef>Nombre</th>
+                <td mat-cell *matCellDef="let vivienda">{{vivienda.nombre}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="Direccion">
+                <th mat-header-cell *matHeaderCellDef>Direccion</th>
+                <td mat-cell *matCellDef="let vivienda">{{vivienda.direccion}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="Deuda">
+                <th mat-header-cell *matHeaderCellDef>Deuda</th>
+                <td mat-cell *matCellDef="let vivienda">{{vivienda.montoAcumulado}}$</td>
+            </ng-container>
+
+            <ng-container matColumnDef="Acciones">
+                <th mat-header-cell *matHeaderCellDef>Acciones</th>
+                <td mat-cell *matCellDef="let vivienda">
+                    <button mat-mini-fab class="small-button">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-mini-fab class="small-button">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+        
+            <tr mat-header-row *matHeaderRowDef="columnasMostradas"></tr>
+            <tr mat-row *matRowDef="let row;columns:columnasMostradas;"></tr>
+
+            
+
+
+        </table>
+        <mat-paginator [length]="viviendas.length"
+                [pageSize]="10"
+                [pageSizeOptions]="[10]"
+                (page)="onPageChange($event)"
+        >
+
+        </mat-paginator>
+    </div>
     </mat-tab>
     <mat-tab label="Crear">
         <mat-card class="card-container">
+            @if(showSpinner){
+                <div class="spinner-container">
+                    <mat-spinner></mat-spinner>
+                </div>
+            }
             <div class="form-container">
+                
                 <form [formGroup]="crearViviendaForm" (submit)="crearVivienda()">
+                    <mat-error *ngIf="errorMessage">Ya existe una vivienda con ese nombre</mat-error>
                     <mat-form-field>
                       <mat-label>Nombre de la Vivienda</mat-label>
                       <input matInput type="text" placeholder="Nombre" [formControlName]="'nombre'" required>

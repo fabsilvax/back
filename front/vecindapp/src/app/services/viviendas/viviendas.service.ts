@@ -11,7 +11,7 @@ export class ViviendasService {
   private http = inject(HttpClient);
   
   crearVivienda(DTO: ViviendaAdministradorDTO){
-   return this.http.post<HttpResponse<Vivienda>>("http://localhost:8080/viviendas/crear", DTO);
+   return this.http.post<HttpResponse<Vivienda>>("http://localhost:8080/viviendas/crear", DTO, {observe: 'response'});
   }
 
   obtenerViviendasDeAdministrador(administradorId: number){

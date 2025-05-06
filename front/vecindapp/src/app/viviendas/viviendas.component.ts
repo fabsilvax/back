@@ -15,14 +15,23 @@ import { MatButtonModule } from '@angular/material/button';
 import { Administrador } from '../model/administrador.interface';
 import { ViviendaAdministradorDTO } from '../model/viviendaAdministradorDTO.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatProgressSpinnerModule, MatSpinner } from '@angular/material/progress-spinner';
+import { MatDivider, MatListModule } from '@angular/material/list';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatTableModule } from '@angular/material/table';
 
 @Component({
   selector: 'app-viviendas',
-  imports: [MatTabsModule, MatCardModule, MatPaginatorModule, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatIconModule, FormsModule, CommonModule, MatButtonModule, MatCardModule, MatIconModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule],
+  imports: [MatTabsModule, MatCardModule, MatPaginatorModule, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatIconModule, FormsModule, CommonModule, MatButtonModule, MatCardModule, MatIconModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatProgressSpinnerModule, MatListModule, MatDividerModule, MatTableModule],
   templateUrl: './viviendas.component.html',
   styleUrl: './viviendas.component.css'
 })
 export class ViviendasComponent {
+  columnasMostradas: string[] = ['Nombre', 'Direccion', 'Deuda', 'Acciones']
+
+
+  showSpinner : boolean = false;
+  errorMessage: boolean = false;
   viviendas: Array<Vivienda> = []
   viviendasPaginadas: Array<Vivienda> = []
   private viviendaService = inject(ViviendasService)
@@ -35,9 +44,10 @@ export class ViviendasComponent {
     montoAcumulado: new FormControl(0, [Validators.required])
   })
 
-  ngOnInit(){
+  async ngOnInit(){
    
     this.obtenerViviendas();
+    
 
   }
 
@@ -49,9 +59,7 @@ export class ViviendasComponent {
         if(response){
           console.log(response)
           this.viviendas = response as unknown as Array<Vivienda>
-          this.viviendas.forEach(function (value) {
-            console.log(value.nombre);
-          })
+          this.viviendasPaginadas = this.viviendas.slice(0, 10)
         }
       },
       error: (error) => {
@@ -61,6 +69,7 @@ export class ViviendasComponent {
   }
 
   onPageChange(event: PageEvent){
+    console.log(`${event.pageIndex} and ${event.pageSize}`)
     this.updatePage(event.pageIndex, event.pageSize);
   }
 
@@ -71,6 +80,7 @@ export class ViviendasComponent {
   }
 
   crearVivienda(){
+    this.errorMessage = false;
     const viviendaNueva: Vivienda = {
       nombre: this.crearViviendaForm.value.nombre?? '',
       direccion: this.crearViviendaForm.value.direccion?? '',
@@ -87,14 +97,20 @@ export class ViviendasComponent {
     this.viviendaService.crearVivienda(DTO)
     .subscribe({
       next:(response) =>{
-        if(response.status == 201){
+        if(response.status != 201){
+          this.obtenerViviendas();
+          this.showSpinner = true;
+        //Se necesita manejo de errores aqui
+          setTimeout(() => {
+            this.showSpinner = false;
+          }, 1000)
           this._snackBar.open('Vivienda Creada!', 'Ok')
-          
-        }
+        }          
+        
 
       },
       error:() => {
-
+        this.errorMessage = true;
       }
     })
     this.obtenerViviendas()
