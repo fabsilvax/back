@@ -19,6 +19,8 @@ import { MatProgressSpinnerModule, MatSpinner } from '@angular/material/progress
 import { MatDivider, MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTableModule } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
+import { ModifyViviendaDialogComponent } from '../modify-vivienda-dialog/modify-vivienda-dialog.component';
 
 @Component({
   selector: 'app-viviendas',
@@ -29,6 +31,7 @@ import { MatTableModule } from '@angular/material/table';
 export class ViviendasComponent {
   columnasMostradas: string[] = ['Nombre', 'Direccion', 'Deuda', 'Acciones']
 
+  private dialog = inject(MatDialog)
 
   showSpinner : boolean = false;
   errorMessage: boolean = false;
@@ -98,13 +101,9 @@ export class ViviendasComponent {
     .subscribe({
       next:(response) =>{
         if(response.status != 201){
-          this.obtenerViviendas();
-          this.showSpinner = true;
-        //Se necesita manejo de errores aqui
-          setTimeout(() => {
-            this.showSpinner = false;
-          }, 1000)
-          this._snackBar.open('Vivienda Creada!', 'Ok')
+          console.log('todo bien')
+          
+          
         }          
         
 
@@ -113,7 +112,14 @@ export class ViviendasComponent {
         this.errorMessage = true;
       }
     })
-    this.obtenerViviendas()
+    this.showSpinner = true;
+          this._snackBar.open('Vivienda Creada!', 'Ok')
+        //Se necesita manejo de errores aqui
+          setTimeout(() => {
+            this.showSpinner = false;
+            window.location.reload()
+          }, 1500)
+          
     
   }
   isButtonDisabled(): boolean{
@@ -122,5 +128,19 @@ export class ViviendasComponent {
     const montoAcumulado = this.crearViviendaForm.controls["montoAcumulado"];
     return (nombre.invalid && (nombre.touched || nombre.dirty)) ||
          (direccion.invalid && (direccion.touched || direccion.dirty) || ((nombre == null)||(direccion==null)||(montoAcumulado==null)));
+  }
+
+  openDialog(vivienda: Vivienda){
+    const dialogRef = this.dialog.open(ModifyViviendaDialogComponent, {
+      data: vivienda
+    }
+    );
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        console.log('Dialog result', result);
+      }
+    })
+  
   }
 }

@@ -29,5 +29,10 @@ public class ViviendaController {
         return viviendaService.obtenerViviendasDeAdministrador(administradorId);
     }
 
+    @PutMapping("/viviendas/modificar")
+    public ResponseEntity<Vivienda> modificarVivienda(@RequestParam Integer viviendaId, @RequestBody Vivienda vivienda){
+        return viviendaService.modificarVivienda(viviendaId, vivienda);
+    }
+
 
 }

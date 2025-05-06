@@ -18,4 +18,8 @@ export class ViviendasService {
     return this.http.get<Array<Vivienda>>(`http://localhost:8080/viviendas/lista`, {params: {administradorId: administradorId}})
   }
 
+  modificarVivienda(viviendaId: number, vivienda: Vivienda){
+    return this.http.put<HttpResponse<Vivienda>>(`http://localhost:8080/viviendas/modificar`, vivienda, {params: {viviendaId: viviendaId}})
+  }
+
 }

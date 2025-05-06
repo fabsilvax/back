@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface ViviendaRepository extends JpaRepository<Vivienda, Integer> {
     List<Vivienda> findByAdministradorId(Integer administradorId);
     Optional<Vivienda> findByNombreAndAdministradorId(String nombre, Integer administradorId);
+
+
 }
