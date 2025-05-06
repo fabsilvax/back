@@ -82,7 +82,7 @@ export class ViviendasComponent {
     this.viviendasPaginadas = this.viviendas.slice(start,end);
   }
 
-  crearVivienda(){
+  async crearVivienda(){
     this.errorMessage = false;
     const viviendaNueva: Vivienda = {
       nombre: this.crearViviendaForm.value.nombre?? '',
@@ -97,14 +97,22 @@ export class ViviendasComponent {
       administrador: administradorDueno
     }
 
-    this.viviendaService.crearVivienda(DTO)
+    await this.viviendaService.crearVivienda(DTO)
     .subscribe({
       next:(response) =>{
-        if(response.status != 201){
+        if(response.status == 201){
           console.log('todo bien')
+          this.showSpinner = true;
+          this._snackBar.open('Vivienda Creada!', 'Ok')
+        //Se necesita manejo de errores aqui
+          setTimeout(() => {
+            this.showSpinner = false;
+            window.location.reload()
+          }, 1500)
           
-          
-        }          
+        } else {
+          this._snackBar.open('Ya existe una vivienda con ese nombre', 'Ok :(')
+        }         
         
 
       },
@@ -112,13 +120,7 @@ export class ViviendasComponent {
         this.errorMessage = true;
       }
     })
-    this.showSpinner = true;
-          this._snackBar.open('Vivienda Creada!', 'Ok')
-        //Se necesita manejo de errores aqui
-          setTimeout(() => {
-            this.showSpinner = false;
-            window.location.reload()
-          }, 1500)
+    
           
     
   }
