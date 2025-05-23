@@ -10,7 +10,7 @@ export class AdministradorService {
   private http = inject(HttpClient);
 
   crearAdministrador(administrador: Administrador){
-    return this.http.post<HttpResponse<Administrador>>("http://localhost:8080/administrador/crear", administrador);
+    return this.http.post<HttpResponse<Administrador>>("http://localhost:8080/administrador/crear", administrador, { observe: 'response' });
   }
 
   loggearAdministrador(administrador: Administrador){

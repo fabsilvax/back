@@ -1,6 +1,6 @@
-import { Component, computed, Input, signal } from '@angular/core';
+import { Component, computed, inject, Input, signal } from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -28,6 +28,7 @@ export class SidebarComponent {
     nombre:'',
     clave:''
   }
+  private router = inject(Router)
   ngOnInit(){
     this.loggedUserObject = JSON.parse(this.loggedUserString)
   }
@@ -45,9 +46,24 @@ export class SidebarComponent {
     label:"Dashboard",
     link:"dashboard",
     icon:"dataset"
+  },
+  {
+    label:"Mi condominio",
+    link:"condominio",
+    icon:"manage_accounts"
+  },
+  {
+    label:"Zonas Comunes",
+    link:"comunes",
+    icon:"nature_people"
   }
 ]
 
   collapsed = signal(false)
   sidenavWidth = computed(() => this.collapsed() ? '65px':'250px' )
+
+  logout(){
+    localStorage.clear();
+    window.location.reload()
+  }
 }

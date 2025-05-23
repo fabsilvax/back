@@ -9,6 +9,8 @@ import { MatInputModule } from '@angular/material/input';
 import { AdministradorService } from '../services/administrador/administrador.service';
 import { Administrador } from '../model/administrador.interface';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { AdministradorCreadoDialogComponent } from '../administrador-creado-dialog/administrador-creado-dialog.component';
 
 @Component({
   selector: 'app-login',
@@ -19,13 +21,24 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   private adminService =  inject(AdministradorService);
   private router = inject(Router);
+  private dialog = inject(MatDialog)
   @Output() loggedInEvent = new EventEmitter<boolean>();
   loginValid: boolean = true;
+  createAccountValid: boolean= true;
   loginView: boolean = true;
+
   loginForm = new FormGroup(
     {
       name: new FormControl("testing", [Validators.required, Validators.minLength(5), Validators.maxLength(12)]),
       password: new FormControl("testing123", [Validators.required, Validators.minLength(5), Validators.maxLength(12)])
+    }
+  
+  )
+  createAdminForm = new FormGroup(
+    {
+     name: new FormControl("", [Validators.required, Validators.minLength(5), Validators.maxLength(12)]),
+     password: new FormControl("",[Validators.required, Validators.minLength(5), Validators.maxLength(12)]),
+     passwordVerification: new FormControl("", [Validators.required, Validators.minLength(5), Validators.maxLength(12)]) 
     }
   )
   isButtonDisabled(): boolean{
@@ -63,15 +76,39 @@ export class LoginComponent {
 
   }
 
+  openDialog(nombre: string){
+    const dialogRef = this.dialog.open(AdministradorCreadoDialogComponent, {data: nombre})
+  }
+
   crearCuenta(){
-    const administrador: Administrador = {
-      nombre: this.loginForm.value.name ?? '',
-      clave: this.loginForm.value.password ?? ''
+    const password = this.createAdminForm.value.password?? ''
+    const passwordVerification = this.createAdminForm.value.passwordVerification??''
+    if(password != passwordVerification){
+      this.createAccountValid = false;
+      return;
     }
+    const administrador: Administrador = {
+      nombre: this.createAdminForm.value.name ?? '',
+      clave: this.createAdminForm.value.password ?? ''
+    }
+    this.adminService.crearAdministrador(administrador)
+    .subscribe({
+      next: (response) => {
+        if(response.status == 201){
+          console.log('A')
+          this.openDialog(this.createAdminForm.value.name?? '');
+        }
+      },
+      error: (error) => {
+        console.log('uy', error.message)
+      }
+    })
 
 
 
   }
+
+  
 
   cambiarVista(){
     this.loginView = !this.loginView

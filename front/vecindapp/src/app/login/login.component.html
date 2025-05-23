@@ -65,19 +65,25 @@
             
         </mat-card-header>
         <mat-card-content>
-            <form [formGroup]="loginForm" (submit)="crearCuenta()">
-                <mat-error *ngIf="!loginValid">El nombre de usuario ya esta asociado a una cuenta</mat-error>
+            <form [formGroup]="createAdminForm" (submit)="crearCuenta()">
+                <mat-error *ngIf="!createAccountValid">La contraseña no coincide</mat-error>
                 <br>
                 <mat-form-field>
                     <mat-label>Nombre de Usuario</mat-label>
-                    <input matInput type="text" placeholder="Nombre de Usuario" name="name" required> 
+                    <input matInput type="text" placeholder="Nombre de Usuario" name="name" required formControlName="name"> 
                     <mat-icon matSuffix>person</mat-icon>
     
                 </mat-form-field>
                 <br>
                 <mat-form-field>
                     <mat-label>Contraseña</mat-label>
-                    <input matInput type="text" placeholder="Contraseña" name="password" required>
+                    <input matInput type="text" placeholder="Contraseña" name="password" required formControlName="password">
+                    <mat-icon matSuffix>lock</mat-icon>
+                </mat-form-field>
+                <br>
+                <mat-form-field>
+                    <mat-label>Repita su contraseña</mat-label>
+                    <input matInput type="text" placeholder="Contraseña" name="password" required formControlName="passwordVerification">
                     <mat-icon matSuffix>lock</mat-icon>
                 </mat-form-field>
                 <br>

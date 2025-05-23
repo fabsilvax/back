@@ -21,7 +21,7 @@ public class AdministradorService {
     public ResponseEntity<Administrador> crearAdministrador(Administrador administrador){
         Optional<Administrador> administradorEcontrado = administradorRepository.findByNombre(administrador.getNombre());
         if(administradorEcontrado.isPresent()){
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(administradorEcontrado.get());
         }
         Administrador nuevoAdministrador = new Administrador(administrador.getNombre(), administrador.getClave());
         this.administradorRepository.save(nuevoAdministrador);

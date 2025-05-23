@@ -27,6 +27,12 @@
                 </a>
             }
         </mat-nav-list>
+        <div class="logout-container">
+        <button mat-fab extended class="logout-button" aria-label="Example icon button with a delete icon" (click)="logout()">
+          <mat-icon>logout</mat-icon>
+          Cerrar Sesion
+        </button>
+        </div>
     </mat-sidenav>
     <mat-sidenav-content class="content" [style.margin-left]="sidenavWidth()">
 

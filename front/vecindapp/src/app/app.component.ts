@@ -27,7 +27,6 @@ export class AppComponent {
     console.log(loggedUser)
     this.loggedUser = JSON.stringify(loggedUser);
     this.loggedIn = true;
-    
 
   }
 }

@@ -20,5 +20,5 @@ export const routes: Routes = [
     {
         path:'dashboard/:id',
         component:DashboardComponent
-    }
+    },
 ];
